@@ -1,0 +1,4 @@
+/home/nico/CLionProjects/tp0/cmake-build-debug/CMakeFiles/client.dir
+/home/nico/CLionProjects/tp0/cmake-build-debug/CMakeFiles/server.dir
+/home/nico/CLionProjects/tp0/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/nico/CLionProjects/tp0/cmake-build-debug/CMakeFiles/rebuild_cache.dir

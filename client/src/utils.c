@@ -24,19 +24,32 @@ int crear_conexion(char *ip, char* puerto)
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_flags = AI_PASSIVE;
+	hints.ai_flags = 0;
 
-	getaddrinfo(ip, puerto, &hints, &server_info);
+	if (getaddrinfo(ip, puerto, &hints, &server_info) != 0) {
+		perror("Error en getaddrinfo");
+		return -1;
+	}
 
-	// Ahora vamos a crear el socket.
-	int socket_cliente = 0;
+	// Crear socket
+	int socket_client = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
+	if (socket_client == -1) {
+		perror("Error al crear el socket");
+		freeaddrinfo(server_info);
+		return -1;
+	}
 
 	// Ahora que tenemos el socket, vamos a conectarlo
-
+	if (connect(socket_client, server_info ->ai_addr, server_info->ai_addrlen) == -1) {
+		perror("Error en connect");
+		close(socket_client);
+		freeaddrinfo(server_info);
+		return -1;
+	}
 
 	freeaddrinfo(server_info);
 
-	return socket_cliente;
+	return socket_client;
 }
 
 void enviar_mensaje(char* mensaje, int socket_cliente)
